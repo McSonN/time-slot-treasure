@@ -21,11 +21,16 @@ export type Database = {
           created_at: string
           description: string | null
           end_at: string
+          equipment: string[]
           event_name: string
           id: string
           kind: string
           organization: string
+          organization_address: string
+          organization_leader: string
           participants: number
+          privacy_accepted: boolean
+          regulations_accepted: boolean
           start_at: string
           status: string
           user_id: string
@@ -37,11 +42,16 @@ export type Database = {
           created_at?: string
           description?: string | null
           end_at: string
+          equipment?: string[]
           event_name: string
           id?: string
           kind?: string
           organization: string
+          organization_address?: string
+          organization_leader?: string
           participants?: number
+          privacy_accepted?: boolean
+          regulations_accepted?: boolean
           start_at: string
           status?: string
           user_id: string
@@ -53,11 +63,16 @@ export type Database = {
           created_at?: string
           description?: string | null
           end_at?: string
+          equipment?: string[]
           event_name?: string
           id?: string
           kind?: string
           organization?: string
+          organization_address?: string
+          organization_leader?: string
           participants?: number
+          privacy_accepted?: boolean
+          regulations_accepted?: boolean
           start_at?: string
           status?: string
           user_id?: string
@@ -72,6 +87,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      meeting_purpose_templates: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          purpose: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          purpose: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          purpose?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {

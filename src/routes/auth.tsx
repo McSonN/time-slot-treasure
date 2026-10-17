@@ -24,6 +24,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Zaloguj się, aby rezerwować sale i śledzić swoje wnioski." },
       { property: "og:title", content: "Logowanie — Rezerwacje sal" },
       { property: "og:description", content: "Zaloguj się, aby rezerwować sale." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,

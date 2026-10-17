@@ -15,6 +15,8 @@ export const Route = createFileRoute("/_authenticated/wniosek/$id")({
       { name: "description", content: "Szczegóły wniosku o rezerwację obiektu." },
       { property: "og:title", content: "Szczegóły wniosku" },
       { property: "og:description", content: "Szczegóły wniosku o rezerwację obiektu." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Detail,
@@ -74,8 +76,13 @@ function Detail() {
         <Item k="Obiekt" v={b.venues?.name} />
         <Item k="Termin" v={`${format(start, "EEEE d MMM yyyy", { locale: pl })}, ${format(start, "HH:mm")}–${format(end, "HH:mm")}`} />
         <Item k="Uczestnicy" v={String(b.participants)} />
+        <Item k="Adres organizacji" v={b.organization_address || "—"} />
+        <Item k="Osoba kierująca NGO" v={b.organization_leader || "—"} />
         <Item k="Kontakt" v={[b.contact_name, b.contact_email].filter(Boolean).join(" · ") || "—"} />
-        <div className="sm:col-span-2"><Item k="Opis" v={b.description || "—"} /></div>
+        <div className="whitespace-pre-wrap sm:col-span-2"><Item k="Cel spotkania" v={b.description || "—"} /></div>
+        <div className="sm:col-span-2"><Item k="Wyposażenie" v={b.equipment.join(", ") || "Nie wybrano"} /></div>
+        <Item k="Regulamin (zgoda przykładowa)" v={b.regulations_accepted ? "Zaznaczono" : "Nie zaznaczono"} />
+        <Item k="RODO (potwierdzenie przykładowe)" v={b.privacy_accepted ? "Zaznaczono" : "Nie zaznaczono"} />
       </dl>
       <div className="mt-6 flex flex-wrap gap-3">
         {isAdmin && b.status !== "approved" && <Button onClick={() => setStatus("approved")}>Zatwierdź</Button>}
