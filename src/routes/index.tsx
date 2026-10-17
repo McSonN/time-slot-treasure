@@ -28,6 +28,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Sprawdź wolne godziny w obiektach i zarezerwuj termin w kilka kliknięć." },
       { property: "og:title", content: "Kalendarz dostępności sal" },
       { property: "og:description", content: "Sprawdź wolne godziny i zarezerwuj termin." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CalendarPage,
@@ -74,7 +76,7 @@ function CalendarPage() {
       const { data, error } = await supabase
         .from("bookings")
         .select("id,venue_id,start_at,end_at,organization,event_name,kind,status")
-        .neq("status", "rejected")
+        .not("status", "in", "(rejected,cancelled)")
         .lt("start_at", to.toISOString())
         .gt("end_at", from.toISOString());
       if (error) throw error;

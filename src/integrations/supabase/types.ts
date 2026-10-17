@@ -14,52 +14,124 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_history: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_id: string | null
+          actor_is_admin: boolean
+          booking_id: string
+          booking_owner: string
+          changes: Json
+          created_at: string
+          from_status: string | null
+          id: string
+          note: string | null
+          to_status: string | null
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_id?: string | null
+          actor_is_admin?: boolean
+          booking_id: string
+          booking_owner: string
+          changes?: Json
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          to_status?: string | null
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_id?: string | null
+          actor_is_admin?: boolean
+          booking_id?: string
+          booking_owner?: string
+          changes?: Json
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          to_status?: string | null
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
+          change_request: string | null
+          change_requested_at: string | null
           contact_email: string | null
           contact_name: string | null
           created_at: string
           description: string | null
           end_at: string
+          equipment: string[]
           event_name: string
           id: string
           kind: string
           organization: string
+          organization_address: string
+          organization_leader: string
           participants: number
+          privacy_accepted: boolean
+          regulations_accepted: boolean
+          rejection_reason: string | null
           start_at: string
           status: string
+          updated_at: string
           user_id: string
           venue_id: string
         }
         Insert: {
+          change_request?: string | null
+          change_requested_at?: string | null
           contact_email?: string | null
           contact_name?: string | null
           created_at?: string
           description?: string | null
           end_at: string
+          equipment?: string[]
           event_name: string
           id?: string
           kind?: string
           organization: string
+          organization_address?: string
+          organization_leader?: string
           participants?: number
+          privacy_accepted?: boolean
+          regulations_accepted?: boolean
+          rejection_reason?: string | null
           start_at: string
           status?: string
+          updated_at?: string
           user_id: string
           venue_id: string
         }
         Update: {
+          change_request?: string | null
+          change_requested_at?: string | null
           contact_email?: string | null
           contact_name?: string | null
           created_at?: string
           description?: string | null
           end_at?: string
+          equipment?: string[]
           event_name?: string
           id?: string
           kind?: string
           organization?: string
+          organization_address?: string
+          organization_leader?: string
           participants?: number
+          privacy_accepted?: boolean
+          regulations_accepted?: boolean
+          rejection_reason?: string | null
           start_at?: string
           status?: string
+          updated_at?: string
           user_id?: string
           venue_id?: string
         }
@@ -72,6 +144,60 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      email_notifications: {
+        Row: {
+          body: string
+          booking_id: string
+          created_at: string
+          id: string
+          recipient: string
+          status: string
+          subject: string
+        }
+        Insert: {
+          body: string
+          booking_id: string
+          created_at?: string
+          id?: string
+          recipient: string
+          status?: string
+          subject: string
+        }
+        Update: {
+          body?: string
+          booking_id?: string
+          created_at?: string
+          id?: string
+          recipient?: string
+          status?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      meeting_purpose_templates: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          purpose: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          purpose: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          purpose?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {

@@ -11,3 +11,6 @@
 
 - Booking privacy: non-admins read other users' bookings only via the `get_busy_slots` RPC (anonymised); full rows are RLS-limited to owner/admin. Why: users must not see others' request details.
 - Overlaps are blocked by a DB trigger on `bookings`, not just UI. Why: concurrent requests can't double-book.
+- Booking request and purpose-template writes use authenticated server functions with shared Zod schemas; why: client and server validation must agree and ownership comes from the session.
+- Store reusable meeting purposes in an owner-scoped table and request-specific NGO, equipment and consent values on bookings; why: templates persist across devices and submitted requests retain their own snapshot.
+- Interim NGO and venue-equipment fixtures live in the shared booking-request module; why: form defaults and server equipment validation must use the same source until real profiles and venue inventory are connected.
