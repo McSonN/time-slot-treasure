@@ -1,0 +1,3 @@
+- [ ] Expand booking request screen with NGO placeholders, editable dates, participants, reusable purposes, equipment and consent placeholders.
+- [ ] Persist request fields and user-owned purpose templates with validation.
+- [ ] Verify calendar-to-request-to-detail flow and tests.
