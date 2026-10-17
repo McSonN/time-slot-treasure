@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-type Search = { venue?: string; n?: number; week?: string };
+type Search = { venue?: string | undefined; n?: number | undefined; week?: string | undefined };
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
@@ -46,7 +46,7 @@ function CalendarPage() {
   const isAdmin = useIsAdmin(user?.id);
   const weekStart = parseWeek(search.week);
   const days = weekDays(weekStart);
-  const from = slotStart(days[0], 0);
+  const from = slotStart(days[0]!, 0);
   const to = addDays(from, 7);
 
   const venues = useQuery({
@@ -126,7 +126,7 @@ function CalendarPage() {
     let b = sel.a;
     while (b !== hour) {
       const next = b + dir;
-      if (!cellInfo(days[dayIdx], next).selectable) break;
+      if (!cellInfo(days[dayIdx]!, next).selectable) break;
       b = next;
     }
     setSel({ ...sel, b });
@@ -142,7 +142,7 @@ function CalendarPage() {
   }
 
   const selRange = sel
-    ? { start: slotStart(days[sel.day], Math.min(sel.a, sel.b)), end: slotStart(days[sel.day], Math.max(sel.a, sel.b) + 1) }
+    ? { start: slotStart(days[sel.day]!, Math.min(sel.a, sel.b)), end: slotStart(days[sel.day]!, Math.max(sel.a, sel.b) + 1) }
     : null;
 
   function setSearch(patch: Partial<Search>) {
@@ -170,7 +170,7 @@ function CalendarPage() {
         <div>
           <p className="text-sm uppercase tracking-widest text-accent">Dostępność</p>
           <h1 className="text-4xl font-semibold capitalize">
-            {format(days[0], "d MMM", { locale: pl })} – {format(days[6], "d MMM yyyy", { locale: pl })}
+            {format(days[0]!, "d MMM", { locale: pl })} – {format(days[6]!, "d MMM yyyy", { locale: pl })}
           </h1>
         </div>
         <div className="flex items-center gap-2">
@@ -321,7 +321,7 @@ function Legend({ className, children }: { className: string; children: React.Re
   );
 }
 
-function SlotChip({ b, mine, venueName }: { b: Busy | AdminBooking; mine: boolean; venueName?: string }) {
+function SlotChip({ b, mine, venueName }: { b: Busy | AdminBooking; mine: boolean; venueName?: string | undefined }) {
   const admin = "organization" in b;
   const tone = mine
     ? "bg-slot-mine text-slot-mine-foreground"

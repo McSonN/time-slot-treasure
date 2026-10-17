@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-type S = { start: string; end: string; venue?: string; n?: number };
+type S = { start: string; end: string; venue?: string | undefined; n?: number | undefined };
 
 export const Route = createFileRoute("/_authenticated/wniosek/nowy")({
   validateSearch: (s: Record<string, unknown>): S => ({
@@ -75,7 +75,7 @@ function NewRequest() {
       .from("bookings")
       .insert({
         ...form,
-        contact_email: form.contact_email || user.email,
+        contact_email: form.contact_email || user.email || null,
         venue_id: chosen,
         user_id: user.id,
         start_at: s.start,
@@ -85,7 +85,7 @@ function NewRequest() {
       .select("id")
       .single();
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Wniosek został złożony");
     navigate({ to: "/wniosek/$id", params: { id: data.id } });
   }
@@ -113,7 +113,7 @@ function NewRequest() {
           ) : options.length === 0 ? (
             <p className="text-sm text-destructive">Brak wolnego obiektu w tym terminie.</p>
           ) : (
-            <Select value={chosen} onValueChange={setVenueId} disabled={!!s.venue}>
+            <Select value={chosen ?? ""} onValueChange={setVenueId} disabled={!!s.venue}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 {options.map((v) => (

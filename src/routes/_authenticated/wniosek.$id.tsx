@@ -45,14 +45,14 @@ function Detail() {
 
   async function setStatus(status: string) {
     const { error } = await supabase.from("bookings").update({ status }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Zaktualizowano");
     qc.invalidateQueries();
   }
   async function remove() {
     if (!confirm("Na pewno usunąć ten wniosek?")) return;
     const { error } = await supabase.from("bookings").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries();
     navigate({ to: "/" });
   }
