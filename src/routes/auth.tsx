@@ -17,7 +17,7 @@ function safeRedirect(r: unknown) {
 }
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({ redirect: safeRedirect(s.redirect) }),
+  validateSearch: (s: Record<string, unknown>) => ({ redirect: safeRedirect(s["redirect"]) }),
   head: () => ({
     meta: [
       { title: "Logowanie — Rezerwacje sal" },

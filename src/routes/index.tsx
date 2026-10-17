@@ -18,9 +18,9 @@ type Search = { venue?: string; n?: number; week?: string };
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    venue: typeof s.venue === "string" ? s.venue : undefined,
-    n: s.n ? Math.max(1, Number(s.n)) || undefined : undefined,
-    week: typeof s.week === "string" ? s.week : undefined,
+    venue: typeof s["venue"] === "string" ? s["venue"] : undefined,
+    n: s["n"] ? Math.max(1, Number(s["n"])) || undefined : undefined,
+    week: typeof s["week"] === "string" ? s["week"] : undefined,
   }),
   head: () => ({
     meta: [

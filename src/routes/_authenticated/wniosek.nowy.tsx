@@ -17,10 +17,10 @@ type S = { start: string; end: string; venue?: string; n?: number };
 
 export const Route = createFileRoute("/_authenticated/wniosek/nowy")({
   validateSearch: (s: Record<string, unknown>): S => ({
-    start: String(s.start ?? ""),
-    end: String(s.end ?? ""),
-    venue: typeof s.venue === "string" ? s.venue : undefined,
-    n: s.n ? Number(s.n) : undefined,
+    start: String(s["start"] ?? ""),
+    end: String(s["end"] ?? ""),
+    venue: typeof s["venue"] === "string" ? s["venue"] : undefined,
+    n: s["n"] ? Number(s["n"]) : undefined,
   }),
   head: () => ({
     meta: [
