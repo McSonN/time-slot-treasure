@@ -47,3 +47,38 @@ export function toIso(value: string) {
   const d = new Date(value);
   return Number.isNaN(d.getTime()) ? "" : d.toISOString();
 }
+export const bookingEditSchema = z.object({
+  id: z.string().uuid(),
+  start_at: z.string().datetime({ offset: true }),
+  end_at: z.string().datetime({ offset: true }),
+  event_name: z.string().trim().min(1, "Podaj nazwę spotkania.").max(200),
+  participants: z.number().int().min(1, "Podaj co najmniej jednego uczestnika.").max(100000),
+  description: z.string().trim().min(1, "Wpisz cel spotkania.").max(5000),
+  contact_name: z.string().trim().max(150),
+  contact_email: z.string().trim().email("Podaj poprawny e-mail.").max(255),
+  equipment: z.array(z.enum(EQUIPMENT)).max(10),
+}).refine((v) => new Date(v.end_at) > new Date(v.start_at), {
+  message: "Koniec spotkania musi być późniejszy niż początek.", path: ["end_at"],
+});
+
+export const rejectSchema = z.object({
+  id: z.string().uuid(),
+  reason: z.string().trim().min(5, "Podaj uzasadnienie (min. 5 znaków).").max(2000),
+});
+
+export const changeRequestSchema = z.object({
+  id: z.string().uuid(),
+  message: z.string().trim().min(5, "Opisz proponowane zmiany (min. 5 znaków).").max(2000),
+});
+
+/** Who may do what with a booking, by status. */
+export function bookingPermissions(status: string, isOwner: boolean, isAdmin: boolean) {
+  return {
+    edit: isAdmin || (isOwner && status === "pending"),
+    cancel: isOwner && status === "pending",
+    requestChange: isOwner && !isAdmin && status === "approved",
+    approve: isAdmin && status !== "approved",
+    reject: isAdmin && status !== "rejected",
+    remove: isAdmin,
+  };
+}

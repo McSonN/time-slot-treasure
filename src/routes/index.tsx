@@ -76,7 +76,7 @@ function CalendarPage() {
       const { data, error } = await supabase
         .from("bookings")
         .select("id,venue_id,start_at,end_at,organization,event_name,kind,status")
-        .neq("status", "rejected")
+        .not("status", "in", "(rejected,cancelled)")
         .lt("start_at", to.toISOString())
         .gt("end_at", from.toISOString());
       if (error) throw error;
