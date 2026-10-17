@@ -28,6 +28,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Sprawdź wolne godziny w obiektach i zarezerwuj termin w kilka kliknięć." },
       { property: "og:title", content: "Kalendarz dostępności sal" },
       { property: "og:description", content: "Sprawdź wolne godziny i zarezerwuj termin." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CalendarPage,
