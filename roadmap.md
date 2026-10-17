@@ -1,3 +1,4 @@
-- [ ] Expand booking request screen with NGO placeholders, editable dates, participants, reusable purposes, equipment and consent placeholders.
-- [ ] Persist request fields and user-owned purpose templates with validation.
-- [ ] Verify calendar-to-request-to-detail flow and tests.
+- [x] Expand booking request screen with NGO placeholders, editable dates, participants, reusable purposes, equipment and consent placeholders.
+- [x] Persist request fields and user-owned purpose templates with validation.
+- [x] Run request validation and routing tests; verify sign-in redirect preserves selected dates.
+- [ ] Verify signed-in request submission and template persistence through the UI — blocked: no registered auth users; requires user signup/sign-in in preview.
