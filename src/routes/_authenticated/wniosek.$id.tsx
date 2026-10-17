@@ -99,12 +99,12 @@ function Detail() {
   }
   function reject() {
     const p = rejectSchema.safeParse({ id, reason: text });
-    if (!p.success) return toast.error(p.error.issues[0]?.message);
+    if (!p.success) { toast.error(p.error.issues[0]?.message); return; }
     run(() => fns.reject({ data: p.data }), "Wniosek odrzucony. Użytkownik otrzyma powiadomienie.");
   }
   function change() {
     const p = changeRequestSchema.safeParse({ id, message: text });
-    if (!p.success) return toast.error(p.error.issues[0]?.message);
+    if (!p.success) { toast.error(p.error.issues[0]?.message); return; }
     run(() => fns.change({ data: p.data }), "Prośba o zmiany wysłana do administratora.");
   }
 
@@ -245,7 +245,7 @@ function EditForm({ b, busy, onSave, onCancel }: { b: B; busy: boolean; onSave: 
       id: b.id, start_at: toIso(f.start), end_at: toIso(f.end), event_name: f.event_name, participants: f.participants,
       description: f.description, contact_name: f.contact_name, contact_email: f.contact_email, equipment: f.equipment,
     });
-    if (!p.success) return setErr(p.error.issues[0]?.message ?? "Sprawdź dane.");
+    if (!p.success) { setErr(p.error.issues[0]?.message ?? "Sprawdź dane."); return; }
     setErr(""); onSave(p.data);
   }
   return (
