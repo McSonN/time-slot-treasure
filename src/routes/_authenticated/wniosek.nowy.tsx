@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-type S = { start: string; end: string; venue?: string; n?: number };
+type S = { start: string; end: string; venue?: string | undefined; n?: number | undefined };
 export const Route = createFileRoute("/_authenticated/wniosek/nowy")({
   validateSearch: (s: Record<string, unknown>): S => ({
     start: typeof s["start"] === "string" ? s["start"] : "",
