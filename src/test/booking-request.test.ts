@@ -42,3 +42,16 @@ describe("booking request", () => {
     expect(toIso(localDateTime(request.start_at))).toBe(request.start_at);
   });
 });
+import { bookingPermissions, rejectSchema } from "@/lib/booking-request";
+describe("booking detail permissions", () => {
+  it("lets the owner edit or cancel only before acceptance", () => {
+    expect(bookingPermissions("pending", true, false)).toMatchObject({ edit: true, cancel: true, requestChange: false });
+    expect(bookingPermissions("approved", true, false)).toMatchObject({ edit: false, cancel: false, requestChange: true });
+  });
+  it("lets admins edit, approve, reject and delete", () => {
+    expect(bookingPermissions("approved", false, true)).toMatchObject({ edit: true, reject: true, remove: true, approve: false });
+  });
+  it("requires a descriptive rejection reason", () => {
+    expect(rejectSchema.safeParse({ id: "00000000-0000-4000-8000-000000000000", reason: "" }).success).toBe(false);
+  });
+});
