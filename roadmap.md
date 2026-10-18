@@ -5,5 +5,6 @@
 - [x] Finish homepage “Twoje wnioski” list with owner-only reads, status and detail links.
 - [x] Expose full change history to the request owner as well as administrators.
 - [ ] Enable booking-change emails — blocked: sender domain must be configured by the user before managed email templates and sends can be connected.
-- [ ] Show login on the entry page for signed-out visitors.
-- [ ] Prepare external hosting deployment from GitHub; actual deployment requires the user's hosting account configuration.
+- [x] Show login on the entry page for signed-out visitors.
+- [x] Prepare external hosting deployment from GitHub with setup instructions.
+- [ ] Deploy and verify external hosting — blocked: user must configure Cloudflare account secrets and public backend variables in GitHub, then run deployment.

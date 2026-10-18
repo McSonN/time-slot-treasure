@@ -15,3 +15,5 @@
 - Store reusable meeting purposes in an owner-scoped table and request-specific NGO, equipment and consent values on bookings; why: templates persist across devices and submitted requests retain their own snapshot.
 - Interim NGO and venue-equipment fixtures live in the shared booking-request module; why: form defaults and server equipment validation must use the same source until real profiles and venue inventory are connected.
 - The homepage own-request list explicitly filters by session user ID and request kind, including all statuses; why: admin privileges must not turn a personal list into other users' requests.
+- External production hosting uses a Cloudflare Worker deployed by GitHub Actions, not GitHub Pages; why: authenticated Start server functions require a server runtime and must retain validation and RLS.
+- Signed-out visitors at the entry route see the reusable login screen without redirecting the public route; why: login-first entry preserves client-side session hydration and the signed-in calendar URL.

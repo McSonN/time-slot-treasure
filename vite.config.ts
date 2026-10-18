@@ -7,6 +7,11 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  nitro: {
+    preset: "cloudflare-module",
+    output: { dir: ".output", serverDir: ".output/server", publicDir: ".output/public" },
+    cloudflare: { nodeCompat: true, deployConfig: true },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

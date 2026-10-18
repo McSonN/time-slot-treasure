@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { OwnBookings } from "@/components/own-bookings";
+import { LoginScreen } from "@/routes/auth";
 
 type Search = { venue?: string | undefined; n?: number | undefined; week?: string | undefined };
 
@@ -33,8 +34,15 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: CalendarPage,
+  component: EntryPage,
 });
+
+function EntryPage() {
+  const { user, loading } = useSession();
+  if (loading) return <p role="status" className="p-10 text-muted-foreground">Wczytywanie…</p>;
+  if (!user) return <LoginScreen redirect="/" />;
+  return <CalendarPage />;
+}
 
 type Venue = { id: string; name: string; capacity: number };
 type Busy = { id: string; venue_id: string; start_at: string; end_at: string; is_mine: boolean };
