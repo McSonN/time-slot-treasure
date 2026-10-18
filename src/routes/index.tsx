@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { addDays, addWeeks, format, isSameDay } from "date-fns";
@@ -17,6 +17,11 @@ import { cn } from "@/lib/utils";
 type Search = { venue?: string | undefined; n?: number | undefined; week?: string | undefined };
 
 export const Route = createFileRoute("/")({
+  ssr: false,
+  beforeLoad: async ({ location }) => {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) throw redirect({ to: "/auth", search: { redirect: location.href } });
+  },
   validateSearch: (s: Record<string, unknown>): Search => ({
     venue: typeof s["venue"] === "string" ? s["venue"] : undefined,
     n: s["n"] ? Math.max(1, Number(s["n"])) || undefined : undefined,

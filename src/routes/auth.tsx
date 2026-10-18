@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect as redirectTo, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,7 +17,12 @@ function safeRedirect(r: unknown) {
 }
 
 export const Route = createFileRoute("/auth")({
+  ssr: false,
   validateSearch: (s: Record<string, unknown>) => ({ redirect: safeRedirect(s["redirect"]) }),
+  beforeLoad: async ({ search }) => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) throw redirectTo({ to: search.redirect as "/" });
+  },
   head: () => ({
     meta: [
       { title: "Logowanie — Rezerwacje sal" },
