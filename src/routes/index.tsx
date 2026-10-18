@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { OwnBookings } from "@/components/own-bookings";
 
 type Search = { venue?: string | undefined; n?: number | undefined; week?: string | undefined };
 
@@ -306,6 +307,7 @@ function CalendarPage() {
       <p className="mt-4 text-sm text-muted-foreground">
         Zaznacz wolne godziny przeciągając myszką w obrębie jednego dnia (lub kliknij początek, a potem koniec).
       </p>
+      <OwnBookings />
     </div>
   );
 }
