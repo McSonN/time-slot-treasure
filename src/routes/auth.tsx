@@ -33,6 +33,10 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const { redirect } = Route.useSearch();
+  return <LoginScreen redirect={redirect} />;
+}
+
+export function LoginScreen({ redirect }: { redirect: string }) {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");

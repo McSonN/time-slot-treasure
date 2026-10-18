@@ -22,6 +22,25 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
+## Hosting poza Lovable: Cloudflare Workers + GitHub
+
+GitHub Pages (w tym `https://mcsonn.github.io/time-slot-treasure/`) serwuje wyłącznie pliki statyczne. Nie uruchomi funkcji serwerowych tej aplikacji, dlatego samo włączenie Pages wyświetla README, a nie działający system rezerwacji. Przygotowana konfiguracja wdraża aplikację z GitHub na Cloudflare Workers; adres produkcyjny będzie inny niż adres GitHub Pages. Niezalogowany odwiedzający zobaczy logowanie na `/`, a po zalogowaniu kalendarz.
+
+### Jednorazowa konfiguracja
+
+1. Załóż konto Cloudflare i włącz Workers. Przygotuj API token ograniczony do edycji Workers w wybranym koncie (uprawnienia wymagane przez Wrangler), oraz Account ID.
+2. W repozytorium GitHub otwórz **Settings → Secrets and variables → Actions**. Dodaj sekrety `CLOUDFLARE_API_TOKEN` i `CLOUDFLARE_ACCOUNT_ID`. Nie wpisuj tokena do kodu.
+3. Dodaj publiczne zmienne repozytorium `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `VITE_SUPABASE_PROJECT_ID` z istniejącej konfiguracji aplikacji. To ustawienia publicznego klienta Lovable Cloud, nie klucz administratora; nie kopiuj żadnych prywatnych kluczy. Hosting używa nadal istniejących kont i danych w Lovable Cloud.
+4. Jeżeli GitHub wymaga tego przy pierwszym uruchomieniu, włącz Actions. Workflow **Deploy application to Cloudflare** działa po zmianach na `main` albo ręcznie przez **Actions → Run workflow**. Inna gałąź domyślna wymaga zmiany `branches` w workflow.
+5. Po udanym wdrożeniu otwórz adres Workers pokazany przez Cloudflare lub w wyniku Actions. Dodaj ten adres do dozwolonych adresów powrotu logowania w ustawieniach auth Lovable Cloud; sprawdź też adres strony używany w wiadomościach potwierdzających konto.
+6. Sprawdź logowanie, złożenie wniosku i odczyt jego historii na nowym adresie. Zastąp link GitHub Pages linkiem Workers w miejscach, gdzie udostępniasz aplikację.
+
+Nie trzeba publikować aplikacji na Lovable ani przekierowywać do Lovable. Nie można przypisać domeny `github.io` do Cloudflare, ponieważ należy do GitHub. Opcjonalnie podłącz własną domenę w Cloudflare.
+
+Wdrożenie nie zostało wykonane przez autora zmian: wymaga konfiguracji Twojego konta Cloudflare i GitHub. Powiadomienia mailowe nadal czekają na konfigurację domeny nadawcy; sekrety Lovable nie są automatycznie kopiowane na zewnętrzny hosting.
+
+## Uruchamianie lokalne
+
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
