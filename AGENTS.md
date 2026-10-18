@@ -14,3 +14,4 @@
 - Booking request and purpose-template writes use authenticated server functions with shared Zod schemas; why: client and server validation must agree and ownership comes from the session.
 - Store reusable meeting purposes in an owner-scoped table and request-specific NGO, equipment and consent values on bookings; why: templates persist across devices and submitted requests retain their own snapshot.
 - Interim NGO and venue-equipment fixtures live in the shared booking-request module; why: form defaults and server equipment validation must use the same source until real profiles and venue inventory are connected.
+- The homepage own-request list explicitly filters by session user ID and request kind, including all statuses; why: admin privileges must not turn a personal list into other users' requests.

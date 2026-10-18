@@ -100,7 +100,7 @@ function Detail() {
   function reject() {
     const p = rejectSchema.safeParse({ id, reason: text });
     if (!p.success) { toast.error(p.error.issues[0]?.message); return; }
-    run(() => fns.reject({ data: p.data }), "Wniosek odrzucony. Użytkownik otrzyma powiadomienie.");
+    run(() => fns.reject({ data: p.data }), "Wniosek odrzucony.");
   }
   function change() {
     const p = changeRequestSchema.safeParse({ id, message: text });
@@ -108,7 +108,7 @@ function Detail() {
     run(() => fns.change({ data: p.data }), "Prośba o zmiany wysłana do administratora.");
   }
 
-  const visibleHistory = (history.data ?? []).filter((h) => isAdmin || h.action !== "edited");
+  const visibleHistory = history.data ?? [];
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
@@ -145,7 +145,7 @@ function Detail() {
 
       {mode === "edit" ? (
         <EditForm b={b} busy={busy} onCancel={() => setMode("")} onSave={(data) =>
-          run(() => fns.update({ data }), isAdmin && !isOwner ? "Zapisano. Użytkownik otrzyma powiadomienie." : "Zapisano zmiany.")} />
+          run(() => fns.update({ data }), "Zapisano zmiany.")} />
       ) : (
         <dl className="mt-8 grid gap-4 rounded-lg border bg-card p-6 sm:grid-cols-2">
           <Item k="Obiekt" v={b.venues?.name} />
@@ -178,7 +178,7 @@ function Detail() {
 
       {mode === "" && (
         <div className="mt-6 flex flex-wrap gap-3">
-          {can.approve && <Button disabled={busy} onClick={() => run(() => fns.approve({ data: { id } }), "Zaakceptowano. Użytkownik otrzyma powiadomienie.")}>Zaakceptuj</Button>}
+          {can.approve && <Button disabled={busy} onClick={() => run(() => fns.approve({ data: { id } }), "Zaakceptowano wniosek.")}>Zaakceptuj</Button>}
           {can.reject && <Button variant="outline" onClick={() => setMode("reject")}>Odrzuć</Button>}
           {can.edit && <Button variant="outline" onClick={() => setMode("edit")}>Edytuj</Button>}
           {can.requestChange && <Button variant="outline" onClick={() => setMode("change")}>Poproś o zmiany</Button>}
@@ -188,7 +188,7 @@ function Detail() {
             </Button>
           )}
           {can.remove && (
-            <Button variant="destructive" disabled={busy} onClick={() => confirm("Na pewno usunąć ten wniosek? Użytkownik otrzyma powiadomienie.") &&
+            <Button variant="destructive" disabled={busy} onClick={() => confirm("Na pewno usunąć ten wniosek?") &&
               run(() => fns.remove({ data: { id } }), "Wniosek usunięty.", () => navigate({ to: "/" }))}>
               Usuń
             </Button>
@@ -197,7 +197,7 @@ function Detail() {
       )}
 
       <section className="mt-10">
-        <h2 className="text-2xl font-semibold">{isAdmin ? "Historia zmian" : "Historia statusu"}</h2>
+        <h2 className="text-2xl font-semibold">Historia zmian</h2>
         <ol className="mt-4 space-y-3 border-l pl-5">
           {visibleHistory.map((h) => {
             const changes = Object.entries((h.changes ?? {}) as Record<string, { from: unknown; to: unknown }>);
@@ -213,7 +213,7 @@ function Detail() {
                   {isAdmin && <> · {h.actor_email ?? "system"} ({h.actor_is_admin ? "administrator" : h.actor_id === b.user_id ? "wnioskodawca" : "użytkownik"})</>}
                 </p>
                 {h.note && <p className="mt-1 whitespace-pre-wrap text-sm">{h.note}</p>}
-                {isAdmin && changes.length > 0 && h.action === "edited" && (
+                {changes.length > 0 && (
                   <ul className="mt-1 space-y-0.5 text-xs">
                     {changes.map(([k, c]) => (
                       <li key={k}><span className="font-medium">{FIELD[k] ?? k}:</span> {show(c.from)} → {show(c.to)}</li>
