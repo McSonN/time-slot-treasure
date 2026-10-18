@@ -1,7 +1,7 @@
 - [x] Expand booking request screen with NGO placeholders, editable dates, participants, reusable purposes, equipment and consent placeholders.
 - [x] Persist request fields and user-owned purpose templates with validation.
 - [x] Run request validation and routing tests; verify sign-in redirect preserves selected dates.
-- [ ] Verify signed-in request submission and template persistence through the UI.
+- [ ] Verify signed-in request submission and template persistence through the UI — blocked: requesting user has no matching account; requires their signup/sign-in or selection of a test account.
 - [x] Finish homepage “Twoje wnioski” list with owner-only reads, status and detail links.
 - [x] Expose full change history to the request owner as well as administrators.
 - [ ] Enable booking-change emails — blocked: sender domain must be configured by the user before managed email templates and sends can be connected.
